@@ -1,0 +1,58 @@
+{
+    "name": "paul121/farm-platform-template",
+    "description": "Platform.sh template for farmOS",
+    "type": "project",
+    "repositories": {
+        "composer": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    },
+    "require": {
+        "farmos/farmos": "2.0.0-beta3",
+        "platformsh/config-reader": "^2.4",
+        "oomphinc/composer-installers-extender": "^2.0",
+        "wikimedia/composer-merge-plugin": "^2.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "installer-paths": {
+            "web/core": [
+                "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "web/modules/{$name}": [
+                "type:drupal-module"
+            ],
+            "web/profiles/farm": [
+                "farmos/farmos"
+            ],
+            "web/themes/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/Commands/contrib/{$name}": [
+                "type:drupal-drush"
+            ]
+        },
+        "merge-plugin": {
+            "include": [
+                "web/profiles/farm/composer.libraries.json",
+                "web/profiles/farm/composer.project.json"
+            ],
+            "merge-extra": true,
+            "merge-extra-deep": true
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "drupal/core-composer-scaffold": true,
+            "oomphinc/composer-installers-extender": true,
+            "wikimedia/composer-merge-plugin": true
+        }
+    }
+}

@@ -1,0 +1,18 @@
+# The services of the project.
+#
+# Each service listed will be deployed
+# to power your Platform.sh project.
+
+db:
+  type: postgresql:12
+  disk: 2048
+  configuration:
+    databases:
+      - farmdb
+    endpoints:
+      farm:
+        default_database: farmdb
+        privileges:
+          farmdb: admin
+    extensions:
+      - pg_trgm
