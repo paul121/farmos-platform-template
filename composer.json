@@ -12,7 +12,8 @@
         "farmos/farmos": "2.0.0-beta3",
         "platformsh/config-reader": "^2.4",
         "oomphinc/composer-installers-extender": "^2.0",
-        "wikimedia/composer-merge-plugin": "^2.0"
+        "wikimedia/composer-merge-plugin": "^2.0",
+        "drush/drush": "^10.3"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -52,7 +53,8 @@
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
             "oomphinc/composer-installers-extender": true,
-            "wikimedia/composer-merge-plugin": true
+            "wikimedia/composer-merge-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }
