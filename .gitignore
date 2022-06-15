@@ -10,9 +10,10 @@ console/
 
 # Ignore sensitive information
 /web/sites/*/settings.local.php
+/keys
 
 # Ignore Drupal's file directory
-/web/sites/*/files/
+/web/files/
 
 # Ignore SimpleTest multi-site environment.
 /web/sites/simpletest
