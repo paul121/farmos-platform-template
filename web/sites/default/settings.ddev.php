@@ -22,6 +22,8 @@ $databases['default']['default'] = array(
 
 $settings['hash_salt'] = 'change-me';
 
+$settings['file_private_path'] = 'files';
+
 // This will prevent Drupal from setting read-only permissions on sites/default.
 $settings['skip_permissions_hardening'] = TRUE;
 
