@@ -1,11 +1,12 @@
 # See source at https://github.com/matthiaz/platformsh-tools#install_brew_packagessh
 # Provided to @paul121 from Matthias Van Woensel at platformsh support.
+#!/bin/bash
 
 run() {
     # Run the compilation process.
-    # cd $PLATFORM_CACHE_DIR || exit 1;
 
-    # if .linuxbrew folder exists, we can assume everything is installed
+    echo "Setting HOMEBREW_RELOCATE_BUILD_PREFIX to 1 so we can skip a lot of compiling... (beta feature)"
+    export HOMEBREW_RELOCATE_BUILD_PREFIX=1
     cache_folder="${PLATFORM_CACHE_DIR}/.linuxbrew"
     cache_file="$cache_folder/cached_components"
     echo "Cache folder $cache_folder"
@@ -18,7 +19,6 @@ run() {
     else
         copy_lib_from_cache
     fi
-
 
     load_brew
 
@@ -35,8 +35,9 @@ run() {
         install_components $@
         copy_lib_to_cache $@
         echo "$@" > $cache_file
+    else
+        echo "Same components, nothing to be installed"
     fi
-
 
     # Always write the .profile file, so that we can be sure that all bins are immediately ready for use
     write_profile
@@ -44,31 +45,31 @@ run() {
 }
 
 copy_lib_to_cache() {
-    echo "Copy to cache..."
-    cp -Rf $PLATFORM_APP_DIR/.linuxbrew $PLATFORM_CACHE_DIR
+    echo "Copy to cache... #files copied: "
+    cp -Rvf $PLATFORM_APP_DIR/.linuxbrew $PLATFORM_CACHE_DIR | wc -l
 }
 
 copy_lib_from_cache() {
-    echo "Copy from cache..."
-    cp -Rf $PLATFORM_CACHE_DIR/.linuxbrew $PLATFORM_APP_DIR
+    echo "Copy from cache... #files copied: "
+    cp -Rvf $PLATFORM_CACHE_DIR/.linuxbrew $PLATFORM_APP_DIR | wc -l
 }
 
 install_brew() {
     echo "Installing homebrew"
-    mkdir -p /app/.linuxbrew
+    mkdir -p $PLATFORM_APP_DIR/.linuxbrew
 
     echo "Downloading tarball from master repository"
     curl -SsL https://github.com/Homebrew/brew/tarball/master -o brew.tar.gz
 
     echo "Unpacking into .linuxbrew folder"
-    tar xzf brew.tar.gz --strip-components 1 -C /app/.linuxbrew/
+    tar xzf brew.tar.gz --strip-components 1 -C $PLATFORM_APP_DIR/.linuxbrew/
     rm brew.tar.gz
 
     copy_lib_to_cache
 }
 
 load_brew() {
-    eval $(/app/.linuxbrew/bin/brew shellenv)
+    eval $($PLATFORM_APP_DIR/.linuxbrew/bin/brew shellenv)
     brew analytics off
 }
 
@@ -77,22 +78,25 @@ install_components() {
   echo "Installing components: '$components_to_install'"
   for f in $components_to_install
   do
-		  echo "Installing component: '$f'"
+      echo "Installing component: '$f'"
       install_component $f
   done
 }
 
 install_component() {
-    brew install $1
+    # the ls --versions checks if the package is already installed or not, handy if we copied it from cache
+    brew ls --versions $1 || brew install $1
 }
 
 write_profile() {
-  touch /app/.profile
-  echo 'export HOMEBREW_CELLAR="/app/.linuxbrew/Cellar";' >> /app/.profile
-  echo 'export HOMEBREW_REPOSITORY="/app/.linuxbrew/Homebrew";' >> /app/.profile
-  echo 'export PATH="/app/.linuxbrew/bin:/app/.linuxbrew/sbin${PATH+:$PATH}";' >> /app/.profile
-  echo 'export MANPATH="/app/.linuxbrew/share/man${MANPATH+:$MANPATH}:";' >> /app/.profile
-  echo 'export INFOPATH="/app/.linuxbrew/share/info:${INFOPATH:-}";' >> /app/.profile
+  #touch /app/.profile
+  echo "" >> $PLATFORM_APP_DIR/.environment
+  echo 'export HOMEBREW_CELLAR="'$PLATFORM_APP_DIR'/.linuxbrew/Cellar";' >> $PLATFORM_APP_DIR/.environment
+  echo 'export HOMEBREW_REPOSITORY="'$PLATFORM_APP_DIR'/.linuxbrew/Homebrew";' >> $PLATFORM_APP_DIR/.environment
+  echo 'export PATH="'$PLATFORM_APP_DIR'/.linuxbrew/bin:'$PLATFORM_APP_DIR'/.linuxbrew/sbin${PATH+:$PATH}";' >> $PLATFORM_APP_DIR/.environment
+  echo 'export MANPATH="'$PLATFORM_APP_DIR'/.linuxbrew/share/man${MANPATH+:$MANPATH}:";' >> $PLATFORM_APP_DIR/.environment
+  echo 'export INFOPATH="'$PLATFORM_APP_DIR'/.linuxbrew/share/info:${INFOPATH:-}";' >> $PLATFORM_APP_DIR/.environment
+
 }
 
 echo "Installing: $@"
