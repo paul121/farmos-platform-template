@@ -16,4 +16,14 @@ if [ -n "$(drush status bootstrap)" ]; then
   fi
 else
   echo "Drupal not installed. Skipping standard Drupal deploy steps"
+
+  # Install farmOS if variables are provided.
+  INSTALL=$(echo $PLATFORM_VARIABLES | base64 --decode | jq -r '.farm_site_info.install // "false"')
+  if [ $INSTALL = true ]; then
+	  echo "Installing farmOS."
+	  SITE_NAME=$(echo $PLATFORM_VARIABLES | base64 --decode | jq -r '.farm_site_info.site_name // "farmOS"')
+	  SITE_MAIL=$(echo $PLATFORM_VARIABLES | base64 --decode | jq -r '.farm_site_info.site_mail // "admin@example.com"')
+	  ACCOUNT_MAIL=$(echo $PLATFORM_VARIABLES | base64 --decode | jq -r '.farm_site_info.account_mail // "admin@example.com"')
+	  drush site:install --yes --site-name="$SITE_NAME" --site-mail="$SITE_MAIL" --account-mail="$ACCOUNT_MAIL" farm farm.modules=default
+  fi
 fi
