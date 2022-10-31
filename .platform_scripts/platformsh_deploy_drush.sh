@@ -24,6 +24,7 @@ else
 	  SITE_NAME=$(echo $PLATFORM_VARIABLES | base64 --decode | jq -r '.farm_site_info.site_name // "farmOS"')
 	  SITE_MAIL=$(echo $PLATFORM_VARIABLES | base64 --decode | jq -r '.farm_site_info.site_mail // "admin@example.com"')
 	  ACCOUNT_MAIL=$(echo $PLATFORM_VARIABLES | base64 --decode | jq -r '.farm_site_info.account_mail // "admin@example.com"')
-	  drush site:install --yes --site-name="$SITE_NAME" --site-mail="$SITE_MAIL" --account-mail="$ACCOUNT_MAIL" farm farm.modules=default
+    MODULES=$(echo $PLATFORM_VARIABLES | base64 --decode | jq '.farm_site_info.modules // "default"' | jq -r .)
+	  drush site:install --yes --site-name="$SITE_NAME" --site-mail="$SITE_MAIL" --account-mail="$ACCOUNT_MAIL" farm farm.modules="$MODULES"
   fi
 fi
