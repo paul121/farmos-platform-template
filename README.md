@@ -189,58 +189,14 @@ If you're trying to deploy from GitHub, you can generate a copy of this reposito
 
 ### Installing farmOS
 
-Once your code is deployed there are a few options for installing farmOS.
+Once your code is deployed farmOS can be installed via the UI or CLI.
 
-1. Use the farmOS (Drupal) installer as normal. Simply visit your project URL after the deploy is complete and it should redirect you to `/install.php`. You will not be asked for database credentials as those are already provided.
+To install via the UI use the Drupal installer. Simply visit your project URL after the deploy is complete and it should redirect you to `/install.php`. You will not be asked for database credentials as those are already provided.
 
-1. Use the Drush `site-install` command after logging in to your production environment. Again, you will not be asked for database credentials as those are already provided.
+To install via the CLI Use the Drush `site-install` command after logging in to your production environment. Again, you will not be asked for database credentials as those are already provided.
 
     ```sh
-    platform ssh
-    drush site-install
-    ```
-
-1. Leverage the auto-install feature provided with this template. Create a variable named `farm_site_info` with the following JSON:
-
-    ```json
-    {
-        // Flag to configure auto-install. Must be present and set to "true" for this to work.
-        "install": true,
-        // The site name.
-        "site_name": "My farmOS name",
-        // The site email. Used as the "from" when sending emails.
-        "site_mail": "test@example.com",
-        // The admin account email.
-        "account_mail": "test@example.com",
-        // farmOS modules flag. Defaults to "default".
-        // Valid values: "base", "default", "all", or a JSON array of module IDs.
-        "modules": "default",
-    ```
-    The variable can be created via the Platform.sh console UI or using the `platform `cli:
-
-    ```bash
-    platform var:create --level project --name farm_site_info --value='{"install": true, "site_name": "My farmOS name", "site_mail": "test@example.com", "account_mail": "test@example.com"}' --json y --sensitive n --prefix none --visible-build n --visible-runtime y
-
-    ```
-
-    farmOS will be installed on the next deploy after the variable is created (as long as no site is already installed).
-
-    *NOTE:* The auto-install feature works best if the `farm_site_info` variable is created before pushing code to the Platform.sh environment. Because database credentials are provided, it is possible for Drupal to become bootstrapped without submitting the installer form.
-
-    An example workflow:
-
-    ```bash
-    # Clone repo.
-    git clone ...
-
-    # Create project.
-    platform project:create ...
-
-    # Create farm_site_info variable.
-    platform var:create ...
-
-    # Finally, push code.
-    platform push ...
+    platform ssh drush -- site:install --yes --site-name="$SITE_NAME" --site-mail="$SITE_MAIL" --account-mail="$ACCOUNT_MAIL" farm farm.modules="$MODULES"
     ```
 
 ## Next steps
