@@ -13,7 +13,7 @@
         "platformsh/config-reader": "^2.4",
         "oomphinc/composer-installers-extender": "^2.0",
         "wikimedia/composer-merge-plugin": "^2.0",
-        "drush/drush": "^10.3"
+        "drush/drush": "^11"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
