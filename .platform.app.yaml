@@ -15,7 +15,9 @@ dependencies:
 
 runtime:
   extensions:
+    - apcu
     - pdo_pgsql
+    - yaml
 
 # The relationships of the application with services or other applications.
 #
