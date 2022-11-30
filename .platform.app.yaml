@@ -19,6 +19,9 @@ runtime:
     - pdo_pgsql
     - sodium
     - yaml
+  sizing_hints:
+    request_memory: 16
+    reserved_memory: 60
 
 # The relationships of the application with services or other applications.
 #
