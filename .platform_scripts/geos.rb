@@ -1,8 +1,8 @@
 class Geos < Formula
   desc "Geometry Engine"
   homepage "https://trac.osgeo.org/geos"
-  url "https://download.osgeo.org/geos/geos-3.10.3.tar.bz2"
-  sha256 "3c141b07d61958a758345d5f54e3c735834b2f4303edb9f67fb26914f0d44770"
+  url "https://download.osgeo.org/geos/geos-3.11.0.tar.bz2"
+  sha256 "79ab8cabf4aa8604d161557b52e3e4d84575acdc0d08cb09ab3f7aaefa4d858a"
   license "LGPL-2.1-or-later"
 
   livecheck do
@@ -10,12 +10,12 @@ class Geos < Formula
     regex(/href=.*?geos[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "579b5bf2419a61aa7329bc86c99d7a4549340cde9fb26afe37adca66e12b015f"
-    sha256 cellar: :any,                 arm64_big_sur:  "cc504d3448cc8f236abfe114d89e3d1e0d4d5ad6a4f7a708b6c4e5fd06995f94"
-    sha256 cellar: :any,                 monterey:       "a8be8c07e11de3903f85d96d2bafd752f0c6bb58da323bc7221b396249b1ce8c"
-    sha256 cellar: :any,                 big_sur:        "03030f530ca30099fc3a3fbfd919fe6427894e59775bcd95b57aa0bedbc1475a"
-    sha256 cellar: :any,                 catalina:       "a47acdbad83bcde65cba959a9b2959ae8f1de235450d3dcff2a345bedad9ed84"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d85ea74c667999eee7534b949f96608155d801161325b10f50b74297c4fd1136"
+    sha256 cellar: :any,                 arm64_monterey: "25dce9a65e623bc866fc0fdf21be70d2939f33d8f23abc275932e5f3804470c7"
+    sha256 cellar: :any,                 arm64_big_sur:  "4adfc940062c8e534c9596ba2e932fe634e750d2ee53207db14a2949d8af3a4d"
+    sha256 cellar: :any,                 monterey:       "f8f1bd048260aa996c233a61f102f80c4eb045e9922a5c7896974f177fb24956"
+    sha256 cellar: :any,                 big_sur:        "6b4b5202a09fc1bb7d5a2ed971b15ea3af0f242da4c801d21e654a62b26bb469"
+    sha256 cellar: :any,                 catalina:       "cade2a003b9ca0de0c84874967653a4d8cc4fd7e20f19771a8d9badb36122102"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ff1f6210032d16af3456e9f3734028013688d6134d8920e30a5b16e7363bc842"
   end
   depends_on "cmake" => :build
   def install
