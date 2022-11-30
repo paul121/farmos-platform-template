@@ -84,6 +84,7 @@ install_components() {
 }
 
 install_component() {
+    brew search geos@
     # the ls --versions checks if the package is already installed or not, handy if we copied it from cache
     brew ls --versions $1 || brew install $1
 }

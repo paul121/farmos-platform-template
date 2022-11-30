@@ -5,7 +5,8 @@ run() {
     then
         install_php_geos
     else
-        copy_php_geos_from_cache
+        install_php_geos
+        #copy_php_geos_from_cache
     fi
 }
 
@@ -14,21 +15,27 @@ install_php_geos() {
 
   # Configure environment vars using the path brew installed geos.
   load_brew
-  export GEOS_LIBRARY_PATH=$(brew --prefix geos)
+  export GEOS_LIBRARY_PATH=$(brew --prefix geos)/lib
 
   # Add flags so the linker uses this path for libgeos.so
   export LDFLAGS="-L$(brew --prefix geos)/lib -Wl,--rpath -Wl,$(brew --prefix geos)/lib"
+  #echo "$(geos-config --cflags --ldflags)"
+  #export CFLAGS="$(geos-config --cflags)"
+  #export LDFLAGS="$(geos-config --ldflags)"
+  #export LDFLAGS="$(geos-config --cflags --ldflags)"
+
+  #ldconfig -N
+  #export DYLD_LIBRARY_PATH=$(brew --prefix geos)/lib/
 
   # Get php-geos and build in /app/php-geos
-  curl -fsSL 'https://git.osgeo.org/gitea/geos/php-geos/archive/1.0.0.tar.gz' -o php-geos.tar.gz \
-    && tar -xzf php-geos.tar.gz \
-    && rm php-geos.tar.gz \
-    && ( \
-      cd php-geos \
-      && ./autogen.sh \
-      && ./configure \
-      && make
-    )
+  git clone https://git.osgeo.org/gitea/geos/php-geos.git \
+  && ( \
+    cd php-geos \
+    && git checkout e77d5a16abbf89a59d947d1fe49381a944762c9d \
+    && ./autogen.sh \
+    && ./configure \
+    && make
+  )
 
   copy_php_geos_to_cache
 }

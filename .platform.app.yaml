@@ -77,7 +77,7 @@ hooks:
   # No services are available but the disk is writeable.
   build: |
     set -e
-    bash .platform_scripts/install_brew_packages.sh geos
+    bash .platform_scripts/install_brew_packages.sh .platform_scripts/geos.rb
     bash .platform_scripts/install_php_geos.sh
   # The deploy hook runs after your application has been deployed and started.
   # Code cannot be modified at this point but the database is available.
