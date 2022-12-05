@@ -11,4 +11,5 @@ if [ -n "$PLATFORM_APP_DIR" -a -f "$PLATFORM_APP_DIR"/composer.json ] ; then
 fi
 
 # Set default drush URI.
-export DRUSH_OPTIONS_URI=$(echo $PLATFORM_ROUTES | base64 --decode | jq -r 'map(select(.primary == true)) | first | .production_url')
+# See https://github.com/platformsh-templates/drupal9/pull/128
+export DRUSH_OPTIONS_URI=$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "to_entries | map(select(.value.upstream == \"$PLATFORM_APPLICATION_NAME\")) | sort_by(.value.primary, .key) | reverse | [.[].key] | first")
