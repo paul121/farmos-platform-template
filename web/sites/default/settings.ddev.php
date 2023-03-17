@@ -1,6 +1,7 @@
 <?php
 
-$host = "ddev-farmos-postgres";
+$site_name = getenv('DDEV_SITENAME');
+$host = "ddev-$site_name-postgres";
 $port = 5432;
 
 // If DDEV_PHP_VERSION is not set but IS_DDEV_PROJECT *is*, it means we're running (drush) on the host,
