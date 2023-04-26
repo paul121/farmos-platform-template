@@ -5,8 +5,7 @@ run() {
     then
         install_php_geos
     else
-        install_php_geos
-        #copy_php_geos_from_cache
+        copy_php_geos_from_cache
     fi
 }
 
@@ -19,13 +18,6 @@ install_php_geos() {
 
   # Add flags so the linker uses this path for libgeos.so
   export LDFLAGS="-L$(brew --prefix geos)/lib -Wl,--rpath -Wl,$(brew --prefix geos)/lib"
-  #echo "$(geos-config --cflags --ldflags)"
-  #export CFLAGS="$(geos-config --cflags)"
-  #export LDFLAGS="$(geos-config --ldflags)"
-  #export LDFLAGS="$(geos-config --cflags --ldflags)"
-
-  #ldconfig -N
-  #export DYLD_LIBRARY_PATH=$(brew --prefix geos)/lib/
 
   # Get php-geos and build in /app/php-geos
   git clone https://git.osgeo.org/gitea/geos/php-geos.git \
