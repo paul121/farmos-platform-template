@@ -5,14 +5,15 @@
   <arg name="extensions" value="php,module,inc,install,test,profile,theme,css,info,txt,yml"/>
   <config name="drupal_core_version" value="9"/>
   <rule ref="Drupal">
+    <exclude name="Drupal.InfoFiles.AutoAddedKeys.Project"/>
     <exclude name="Drupal.InfoFiles.AutoAddedKeys.Version"/>
     <exclude name="Drupal.Arrays.Array.LongLineDeclaration"/>
     <exclude name="Drupal.Commenting.InlineComment.SpacingAfter"/>
   </rule>
   <rule ref="DrupalPractice">
     <exclude name="DrupalPractice.Commenting.CommentEmptyLine.SpacingAfter"/>
-    <!--    Temporarily ignore the \Drupal code sniff.-->
-    <exclude name="DrupalPractice.Objects.GlobalDrupal.GlobalDrupal"/>
   </rule>
+  <rule ref="PHPCompatibility"/>
+  <config name="testVersion" value="7.4-"/>
   <rule ref="Internal.Tokenizer.Exception"><severity>0</severity></rule>
 </ruleset>
