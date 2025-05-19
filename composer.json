@@ -6,19 +6,14 @@
         "composer": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        "farm-site-config": {
-            "type": "git",
-            "url": "git@github.com:paul121/farm_site_config.git"
         }
     },
     "require": {
-        "farmos/farmos": "^2.0",
+        "farmos/farmos": "^3.4",
         "platformsh/config-reader": "^2.4",
         "oomphinc/composer-installers-extender": "^2.0",
         "wikimedia/composer-merge-plugin": "^2.0",
-        "drush/drush": "^11",
-        "paul121/farm_site_config": "^1.0"
+        "drush/drush": "^12"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
