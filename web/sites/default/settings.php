@@ -4,7 +4,7 @@
 
 /**
  * @file
- * Platform.sh settings.php file for Drupal 9+.
+ * Platform.sh settings.php file for Drupal.
  */
 
 // Default Drupal settings.
