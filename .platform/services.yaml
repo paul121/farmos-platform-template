@@ -4,7 +4,7 @@
 # to power your Platform.sh project.
 
 db:
-  type: postgresql:12
+  type: postgresql:16
   disk: 2048
   configuration:
     databases:
