@@ -88,10 +88,6 @@ hooks:
   # fast.
   deploy: |
     set -e
-    # if drupal is installed, will call the following drush commands:
-    #   - `cache-rebuild`
-    #   - `updatedb`
-    #   - and if config files are present, `config-import`
     bash .platform_scripts/platformsh_deploy_drush.sh
 
 # The configuration of app when it is exposed to the web.
